@@ -55,7 +55,6 @@ if (!defined('WPINC')) {
 
 	volumeSlider.addEventListener('input', (e) => {
 		const value = e.target.value;
-
 		stream.volume = value / 100;
 		console.log(stream.volume);
 		console.log(stream.volumeSlider);
@@ -94,7 +93,6 @@ if (!defined('WPINC')) {
 			console.log(span_mute.classList.value);
 		}
 	});
-
 
 	/* Implementation of the Media Session API */
 	if ('mediaSession' in navigator) {
@@ -150,7 +148,6 @@ if (!defined('WPINC')) {
 			console.log('pausa API');
 			console.log(playState);
 			playState = 'play';
-
 		});
 		navigator.mediaSession.setActionHandler('stop', () => {
 			stream.pause();
@@ -173,15 +170,13 @@ if (!defined('WPINC')) {
 </script>
 
 <style type="text/css">
+	@media screen and (max-width: 1024px) {#volume-slider {display: none !important;}.radio_player {justify-content:center !important;}}
 
-@media screen and (max-width: 1024px) {
-  #volume-slider { display: none!important; } .radio_player{ justify-content: center!important;} 
-}
 	.radio_player {
 		/*justify-content: center;*/
 		display: flex;
 		flex-direction: row;
-		padding: 10px;
+		/*padding: 10px;*/
 		width: 100%;
 		/* max-width: 250px; */
 	}
@@ -196,7 +191,7 @@ if (!defined('WPINC')) {
 		display: inline-block;
 		padding: 0;
 		margin: 0.2rem auto;
-		background-color: #2a8db3;
+		background-color: #2a8db3 !important;
 		box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 		transition: background-color 0.3s ease-in-out;
 		border: 0;
@@ -205,7 +200,7 @@ if (!defined('WPINC')) {
 	}
 
 	.radio_player_controls button:hover {
-		background-color: #20afcc;
+		background-color: #20afcc !important;
 	}
 
 	.radio_player_controls button span {
@@ -224,7 +219,6 @@ if (!defined('WPINC')) {
 		position: absolute;
 		top: 30%;
 		z-index: 2;
-
 	}
 
 	#volume-slider.visible {
@@ -240,8 +234,7 @@ if (!defined('WPINC')) {
 		margin-right: 10px;
 	}
 
-	/*generated with Input range slider CSS style generator (version 20210711)
-https://toughengineer.github.io/demo/slider-styler*/
+	/*generated with Input range slider CSS style generator (version 20210711) https://toughengineer.github.io/demo/slider-styler*/
 	input[type=range].volume_slider {
 		height: 1em;
 		-webkit-appearance: none;
