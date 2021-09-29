@@ -33,20 +33,28 @@ if (!defined('WPINC')) {
 		volumeSlider.classList.remove("visible");
 	});
 
+
+	stream.onplaying = function() {
+		isPlaying = true;
+		span_play.classList.remove("dashicons-controls-play");
+		span_play.classList.add("dashicons-controls-pause");
+	};
+	stream.onpause = function() {
+		isPlaying = false;
+		span_play.classList.add("dashicons-controls-play");
+		span_play.classList.remove("dashicons-controls-pause");
+	};
+
 	playIconContainer.addEventListener('click', () => {
 		if (state === 'play') {
 			console.log(stream.src);
 			console.log(stream.metadata);
 			stream.play();
-			span_play.classList.remove("dashicons-controls-play");
-			span_play.classList.add("dashicons-controls-pause");
 			state = 'pause';
 			console.log(state);
 			console.log(span_play.classList.value);
 		} else {
 			stream.pause();
-			span_play.classList.add("dashicons-controls-play");
-			span_play.classList.remove("dashicons-controls-pause");
 			state = 'play';
 			console.log(state);
 			console.log(span_play.classList.value);
@@ -170,7 +178,15 @@ if (!defined('WPINC')) {
 </script>
 
 <style type="text/css">
-	@media screen and (max-width: 1024px) {#volume-slider {display: none !important;}.radio_player {justify-content:center !important;}}
+	@media screen and (max-width: 1024px) {
+		#volume-slider {
+			display: none !important;
+		}
+
+		.radio_player {
+			justify-content: center !important;
+		}
+	}
 
 	.radio_player {
 		/*justify-content: center;*/
