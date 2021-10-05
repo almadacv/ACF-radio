@@ -35,13 +35,13 @@ class RadioDinamico
 		wp_enqueue_style('dashicons');
 	}
 
-function add_rewrite_rules($wp_rewrite) {
+	function add_rewrite_rules($wp_rewrite)
+	{
 		$rules = array(
 			'radio-tools-stream-proxy\/?$' 	=> 'index.php?radio-tools-stream-proxy=true',
 			'radio-tools-window-player\/?$'	=>	'index.php?radio-tools-window-player=true',
 		);
 		$wp_rewrite->rules = $rules + (array)$wp_rewrite->rules;
-
 	}
 
 	function query_vars($public_query_vars)
@@ -66,27 +66,17 @@ function add_rewrite_rules($wp_rewrite) {
 
 	function render_radio_widget()
 	{
-
 		$html = '';
-
-		$stream_url = get_option('radio-tools-stream-url', false);
 
 		$stream = get_field('endereco_stream');
 		$img_post = get_the_post_thumbnail_url();
+		ob_start();
 
-		if ($stream_url) {
+		include RADIO_DINAMICO_PLUGIN_TEMPLATES_PATH . 'player.php';
 
-			$theme_player = get_stylesheet_directory() . '/radio-dinamico/player.php';
+		$player = ob_get_contents();
 
-			ob_start();
-			if (file_exists($theme_player)) {
-				include $theme_player;
-			} else {
-				include RADIO_DINAMICO_PLUGIN_TEMPLATES_PATH . 'player.php';
-			}
-			$player = ob_get_contents();
-			ob_end_clean();
-		}
+		ob_end_clean();
 
 		return $player;
 	}
