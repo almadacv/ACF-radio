@@ -47,40 +47,28 @@ if (!defined('WPINC')) {
 
 	playIconContainer.addEventListener('click', () => {
 		if (state === 'play') {
-			console.log(stream.src);
-			console.log(stream.metadata);
 			stream.play();
 			state = 'pause';
-			console.log(state);
-			console.log(span_play.classList.value);
 		} else {
 			stream.pause();
 			state = 'play';
-			console.log(state);
-			console.log(span_play.classList.value);
 		}
 	});
 
 	volumeSlider.addEventListener('input', (e) => {
 		const value = e.target.value;
 		stream.volume = value / 100;
-		console.log(stream.volume);
-		console.log(stream.volumeSlider);
 
 		if (stream.volume === 0) {
 			stream.muted = true;
 			span_mute.classList.remove("dashicons-controls-volumeon");
 			span_mute.classList.add("dashicons-controls-volumeoff");
 			muteState = 'mute';
-			console.log(muteState);
-			console.log(span_mute.classList.value);
 		} else {
 			stream.muted = false;
 			span_mute.classList.add("dashicons-controls-volumeon");
 			span_mute.classList.remove("dashicons-controls-volumeoff");
 			muteState = 'unmute';
-			console.log(muteState);
-			console.log(span_mute.classList.value);
 		}
 	});
 
@@ -90,15 +78,11 @@ if (!defined('WPINC')) {
 			span_mute.classList.remove("dashicons-controls-volumeon");
 			span_mute.classList.add("dashicons-controls-volumeoff");
 			muteState = 'mute';
-			console.log(muteState);
-			console.log(span_mute.classList.value);
 		} else {
 			stream.muted = false;
 			span_mute.classList.add("dashicons-controls-volumeon");
 			span_mute.classList.remove("dashicons-controls-volumeoff");
 			muteState = 'unmute';
-			console.log(muteState);
-			console.log(span_mute.classList.value);
 		}
 	});
 
@@ -143,8 +127,6 @@ if (!defined('WPINC')) {
 			stream.play();
 			span_play.classList.remove("dashicons-controls-play");
 			span_play.classList.add("dashicons-controls-pause");
-			console.log('play API');
-			console.log(playState);
 			playState = 'pause';
 
 		});
@@ -153,16 +135,12 @@ if (!defined('WPINC')) {
 			stream.pause();
 			span_play.classList.add("dashicons-controls-play");
 			span_play.classList.remove("dashicons-controls-pause");
-			console.log('pausa API');
-			console.log(playState);
 			playState = 'play';
 		});
 		navigator.mediaSession.setActionHandler('stop', () => {
 			stream.pause();
 			span_play.classList.add("dashicons-controls-play");
 			span_play.classList.remove("dashicons-controls-pause");
-			console.log('stop API');
-			console.log(playState);
 			playState = 'play';
 		});
 
