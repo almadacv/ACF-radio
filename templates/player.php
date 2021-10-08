@@ -22,9 +22,8 @@ if (!defined('WPINC')) {
 	const volumeSlider = document.getElementById('volume-slider');
 	const muteIconContainer = document.getElementById('mute-icon');
 	const boxvolume = document.getElementById('volume-pack');
-	let state = 'play';
 	let muteState = 'unmute';
-	let playState = 'play';
+	var isPlaying = false;
 
 	boxvolume.addEventListener("mouseover", evt => {
 		volumeSlider.classList.add("visible");
@@ -46,12 +45,10 @@ if (!defined('WPINC')) {
 	};
 
 	playIconContainer.addEventListener('click', () => {
-		if (state === 'play') {
+		if (!isPlaying) {
 			stream.play();
-			state = 'pause';
 		} else {
 			stream.pause();
-			state = 'play';
 		}
 	});
 
@@ -63,12 +60,10 @@ if (!defined('WPINC')) {
 			stream.muted = true;
 			span_mute.classList.remove("dashicons-controls-volumeon");
 			span_mute.classList.add("dashicons-controls-volumeoff");
-			muteState = 'mute';
 		} else {
 			stream.muted = false;
 			span_mute.classList.add("dashicons-controls-volumeon");
 			span_mute.classList.remove("dashicons-controls-volumeoff");
-			muteState = 'unmute';
 		}
 	});
 
@@ -127,21 +122,16 @@ if (!defined('WPINC')) {
 			stream.play();
 			span_play.classList.remove("dashicons-controls-play");
 			span_play.classList.add("dashicons-controls-pause");
-			playState = 'pause';
-
 		});
 		navigator.mediaSession.setActionHandler('pause', () => {
-
 			stream.pause();
 			span_play.classList.add("dashicons-controls-play");
 			span_play.classList.remove("dashicons-controls-pause");
-			playState = 'play';
 		});
 		navigator.mediaSession.setActionHandler('stop', () => {
 			stream.pause();
 			span_play.classList.add("dashicons-controls-play");
 			span_play.classList.remove("dashicons-controls-pause");
-			playState = 'play';
 		});
 
 	} // final d media API
@@ -163,6 +153,9 @@ if (!defined('WPINC')) {
 
 		.radio_player {
 			justify-content: center !important;
+		}
+		button#play-icon {
+			margin-right: 1em;
 		}
 	}
 
@@ -212,7 +205,12 @@ if (!defined('WPINC')) {
 		display: none;
 		position: absolute;
 		top: 30%;
-		z-index: 2;
+		/*z-index: 2;*/
+		left: -1em;
+		top: 4.5rem;
+		transform: rotate(270deg);
+		outline: 1px red solid;
+		padding: 0.7em 0;
 	}
 
 	#volume-slider.visible {
