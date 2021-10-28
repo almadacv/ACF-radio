@@ -8,9 +8,12 @@ if (!defined('WPINC')) {
 <div class="radio_player">
 	<div class="radio_player_controls">
 		<audio id="audio_src" src="<?php echo $stream; ?>" preload="none"></audio>
-		<button id="play-icon"><span id="span_play" class="dashicons dashicons-controls-play"></span></button>
+		<div>
+			<!-- <button id="rotate"><span id="span_rotate" class="dashicons dashicons-image-rotate"></span></button> -->
+			<button id="play-icon"><span id="span_play" class="dashicons dashicons-controls-play"></span></button>
+		</div>
 		<div id="volume-pack">
-			<button id="mute-icon"><span id="span_mute" class="dashicons dashicons-controls-volumeon"></span></span></button>
+			<button id="mute-icon"><span id="span_mute" class="dashicons dashicons-controls-volumeon"></span></button>
 			<input id="volume-slider" class="volume_slider volume_slider_progresso" type="range" max="100" value="80">
 		</div>
 	</div>
@@ -22,8 +25,10 @@ if (!defined('WPINC')) {
 	const volumeSlider = document.getElementById('volume-slider');
 	const muteIconContainer = document.getElementById('mute-icon');
 	const boxvolume = document.getElementById('volume-pack');
+	const mostaerro = document.getElementById('mostra_erro');
 	let muteState = 'unmute';
 	var isPlaying = false;
+	let playAntes = false
 
 	boxvolume.addEventListener("mouseover", evt => {
 		volumeSlider.classList.add("visible");
@@ -35,8 +40,11 @@ if (!defined('WPINC')) {
 
 	stream.onplaying = function() {
 		isPlaying = true;
+		span_play.classList.remove("dashicons-image-rotate");
 		span_play.classList.remove("dashicons-controls-play");
 		span_play.classList.add("dashicons-controls-pause");
+		/* span_play.classList.remove("dashicons-controls-play");
+		span_play.classList.add("dashicons-controls-pause"); */
 	};
 	stream.onpause = function() {
 		isPlaying = false;
@@ -45,11 +53,20 @@ if (!defined('WPINC')) {
 	};
 
 	playIconContainer.addEventListener('click', () => {
+
 		if (!isPlaying) {
-			stream.play();
+			if (!playAntes) {
+				span_play.classList.add("dashicons-image-rotate");
+				span_play.classList.remove("dashicons-controls-play")
+				stream.play();
+				playAntes = true;
+			} else {
+				stream.play();
+			}
 		} else {
 			stream.pause();
 		}
+
 	});
 
 	volumeSlider.addEventListener('input', (e) => {
@@ -154,8 +171,23 @@ if (!defined('WPINC')) {
 		.radio_player {
 			justify-content: center !important;
 		}
+
 		button#play-icon {
 			margin-right: 1em;
+		}
+	}
+
+	.dashicons-image-rotate {
+		animation: spin 2s linear infinite;
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(360deg);
+		}
+
+		100% {
+			transform: rotate(0deg);
 		}
 	}
 
@@ -207,7 +239,7 @@ if (!defined('WPINC')) {
 		top: 30%;
 		/*z-index: 2;*/
 		left: -1em;
-		top: 4.5rem;
+		top: 4.7rem;
 		transform: rotate(270deg);
 		outline: 1px red solid;
 		padding: 0.7em 0;
